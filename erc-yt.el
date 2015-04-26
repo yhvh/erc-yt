@@ -1,4 +1,4 @@
-;;; erc-yt-v3.el --- An erc module to display youtube links nicely
+;;; erc-yt.el --- An erc module to display youtube links nicely
 
 ;; Copyright (C) 2015 William Stevenson
 
@@ -41,12 +41,13 @@
 ;; and insert module name 'youtube' in 'Others'
 
 ;;; Code:
-
+(require 'erc)
 (require 'json)
 (require 'dash)
 
 (defgroup erc-yt nil
-  "Top level group for erc-yt customization. ")
+  "Top level group for erc-yt customization. "
+  :group 'erc)
 
 
 (defcustom erc-yt-cache-dir "/tmp/erc-yt/"
@@ -152,7 +153,7 @@ http://stackoverflow.com/users/624466/eyecatchup")
      (url-copy-file thumb name)
      name)))
 
-
+;;;###autoload
 (defun erc-yt-show-info ()
   "Replace youtube links in erc buffers with title, description
 and clickable thumbnail. "
@@ -188,16 +189,14 @@ and clickable thumbnail. "
                   (assoc-default 'description data)
                   "\n"))))))
 
-
 ;;;###autoload
 (eval-after-load 'erc
   '(define-erc-module youtube nil
-     "Display inlined info about youtube links in ERC buffer"
+     "Display clickable youtube thumbnails inline. "
      ((add-hook 'erc-insert-modify-hook 'erc-yt-show-info t)
       (add-hook 'erc-send-modify-hook 'erc-yt-show-info t))
      ((remove-hook 'erc-insert-modify-hook 'erc-yt-show-info)
-      (remove-hook 'erc-send-modify-hook 'erc-yt-show-info))
-     t))
+      (remove-hook 'erc-send-modify-hook 'erc-yt-show-info))))
 
 
 (provide 'erc-yt)
