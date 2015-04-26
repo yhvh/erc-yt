@@ -1,0 +1,29 @@
+* erc-yt
+  Show inline clickable youtube thumbnails, info and description in
+  erc buffers. Uses youtube api v3.
+
+** Screenshot
+   [[file:./pics/screenshot.png]]
+
+** Usage
+   #+BEGIN_SRC elisp
+     (require 'erc-youtube)
+     (add-to-list 'erc-modules 'youtube)
+     (erc-update-modules)
+   #+END_SRC
+   Or (require 'erc-youtube) and M-x customize-option erc-modules RET
+
+*** Customization
+
+**** erc-yt-browse-function
+     By default left click on the thumbnail will open the video in your
+     browser using the browse-url function. You can change this by
+     customizing the variable erc-yt-browse-function.
+
+**** erc-yt-cache-dir
+     By default we cache images in /tmp/erc-yt.
+
+**** erc-yt-max-description-line
+     Youtube descriptions can be very long in practice, we limit this
+     by default to 5 lines of text.
+

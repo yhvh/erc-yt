@@ -62,7 +62,7 @@
   :type 'function)
 
 (defcustom erc-yt-max-description-lines 5
-  "Maximum amount of characters of description to display. "
+  "Maximum amount of lines of description to display. "
   :group 'erc-yt
   :type 'integer)
 
