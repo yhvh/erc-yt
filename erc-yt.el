@@ -62,13 +62,13 @@
   :type 'function)
 
 (defcustom erc-yt-max-description-lines 5
-  "Maximum amount of lines of description to display. "
+  "Maximum amount of lines of description to display."
   :group 'erc-yt
   :type 'integer)
 
 
 (defconst erc-yt-api-key "AIzaSyCLaxXAE5oArXxF017M3jdilusOeDjbLfY"
-  "Api key. ")
+  "Api key.")
 
 (defconst erc-yt-regex-extract-videoid
   (concat
@@ -101,7 +101,7 @@ http://stackoverflow.com/users/624466/eyecatchup")
 
 
 (defun assoc-rec (alist &rest keys)
-  "Recursively find KEYs in ALIST."
+  "Recursively search ALIST for KEYS."
   (while keys
     (setq alist (cdr (assoc (pop keys) alist))))
   alist)
@@ -113,13 +113,13 @@ http://stackoverflow.com/users/624466/eyecatchup")
 
 
 (defun erc-yt-api-format (video-id)
-  "Format api string. "
+  "Format api string using VIDEO-ID."
   (format "https://www.googleapis.com/youtube/v3/videos?&id=%s&key=%s&part=snippet"
           video-id erc-yt-api-key))
 
 
 (defun erc-yt-fetch-json (url)
-  "Fetch json data from URL. "
+  "Fetch json data from URL."
   (with-current-buffer (url-retrieve-synchronously url)
     (set-buffer-multibyte t)
     (goto-char url-http-end-of-headers)
@@ -127,7 +127,7 @@ http://stackoverflow.com/users/624466/eyecatchup")
 
 
 (defun erc-yt-request (url)
-  "Do youtube api call and extract relevant data. "
+  "Do youtube api call and extract relevant data for video at URL."
   (let* ((video-id (erc-yt-id url))
          (data (erc-yt-fetch-json (erc-yt-api-format (erc-yt-id url))))
          (items (elt (assoc-default 'items data) 0))
@@ -144,7 +144,7 @@ http://stackoverflow.com/users/624466/eyecatchup")
 
 
 (defun erc-yt-thumb-download (thumb video-id)
-  "Download THUMB for VIDEO_ID unless already cached. "
+  "Download THUMB for VIDEO-ID unless already cached."
  (unless (file-exists-p erc-yt-cache-dir)
    (make-directory erc-yt-cache-dir))
  (let ((name (concat erc-yt-cache-dir video-id ".jpg")))
@@ -155,8 +155,7 @@ http://stackoverflow.com/users/624466/eyecatchup")
 
 ;;;###autoload
 (defun erc-yt-show-info ()
-  "Replace youtube links in erc buffers with title, description
-and clickable thumbnail. "
+  "Replace youtube links in erc buffers with title, description and thumbnail."
   (interactive)
   (goto-char (point-min))
   (search-forward "http" nil t)
